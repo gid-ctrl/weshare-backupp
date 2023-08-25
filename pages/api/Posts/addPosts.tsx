@@ -12,7 +12,6 @@ export default async function handler(
         if(!session) {
             return res.status(401).json ({message: "Please sign in to share posts"})
         }
-       
         const title: string = req.body.title
         
     }

@@ -1,27 +1,27 @@
 import { useState } from "react";
-import {useMutation, useQueryClient} from "@tanstack/react-query"
+import {useMutation, QueryClientProvider} from "@tanstack/react-query"
 import axios from "axios";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("")
   const [isDisabled, setIsDisabled] = useState(false)
-  const queryClient = useQueryClient()
+  const queryClient = QueryClientProvider
 
   //Create a post
   const { mutate } = useMutation(
     async (title: string) =>
       await axios.post("/api/posts/addPost", {
         title,
-      })
-    // initially (e) stated that it is declared but never used. Had to sepecify that this was a FORM EVENT
-    )
-    const submitPost = async (e: React.FormEvent) => {
-      e.preventDefault()
-      setIsDisabled(true)
-      mutate(title)
-    }
-  
+      }),
+  )
 
+  // initially (e) stated that it is declared but never used. Had to sepecify that this was a FORM EVENT
+  const submitPost = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsDisabled(true)
+    mutate(title)
+  }
+  
       return (
       <form onSubmit={submitPost} className="bg-white my-8 p-8 rounded-md ">
         <div className="flex flex-col my-4">

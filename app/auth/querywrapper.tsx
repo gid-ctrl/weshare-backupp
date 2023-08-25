@@ -1,17 +1,20 @@
 "use client"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactNode } from "react"
 
+import { ReactNode } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+
+const queryClient = new QueryClient()
+
+// Letting it know that children is a type of React Node
 interface Props {
-    children?: ReactNode
+  children?: ReactNode
 }
 
-const queryClient = new QueryClient ()
-
-const queryWrapper = ({children}: Props) => (
-    <QueryClientProvider client={queryClient}>
-        {children}
-    </QueryClientProvider>
+const QueryWrapper = ({ children }: Props) => (
+  <QueryClientProvider client={queryClient}>
+    {children}
+  </QueryClientProvider>
 )
 
-export default queryWrapper
+export default QueryWrapper
