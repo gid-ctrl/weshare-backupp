@@ -6,13 +6,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
     // Here we are checking if the user has logged in or not
-    if(req.method === "POST"){
-        const session = await getServerSession(req, res, authOptions) 
-        if(!session) {
-            return res.status(401).json ({message: "Please sign in to share posts"})
-        }
-        const title: string = req.body.title
-        
+    if (req.method === "POST") {
+    const session = await getServerSession(req, res, authOptions)
+ if (!session)
+        return res
+        .status(401)
+        .json({ message: "Please signin to create a post." })
+      }
+      console.log(req.body)
     }
-}
+

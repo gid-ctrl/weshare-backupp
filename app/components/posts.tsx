@@ -1,23 +1,34 @@
+"use client"
+
 import { useState } from "react";
-import {useMutation, QueryClientProvider} from "@tanstack/react-query"
+import {useMutation, useQueryClient} from "@tanstack/react-query"
 import axios from "axios";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("")
   const [isDisabled, setIsDisabled] = useState(false)
-  const queryClient = QueryClientProvider
+
 
   //Create a post
+  // Here I am trying to get an API to send data to
   const { mutate } = useMutation(
     async (title: string) =>
-      await axios.post("/api/posts/addPost", {
-        title,
-      }),
-  )
+      await axios.post("/api/posts/addPost", { title }),
+    {
+      onSuccess: (data) => {
+        console.log("Post creation successful:", data);
+        // Additional logic you want to perform after a successful mutation
+      },
+      onError: (error) => {
+        console.error("Post creation error:", error);
+      }
+    }
+    )
 
   // initially (e) stated that it is declared but never used. Had to sepecify that this was a FORM EVENT
   const submitPost = async (e: React.FormEvent) => {
     e.preventDefault()
+    // will disable the button
     setIsDisabled(true)
     mutate(title)
   }
@@ -29,7 +40,7 @@ export default function CreatePost() {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             name="title"
-            placeholder="What's on your mind?"
+            placeholder="Share your thoughts"
             className="p-4 text-lg rounded-md my-2  bg-gray-200"
           />
         </div>
@@ -50,3 +61,4 @@ export default function CreatePost() {
       </form>
     )
   }
+  
